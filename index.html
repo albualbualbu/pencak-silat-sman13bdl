@@ -1,10 +1,430 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-  <title>Test</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pencak Silat SMAN 13 Bandar Lampung</title>
+  <style>
+    /* ===== RESET ===== */
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;overflow-x:hidden;background:#0f172a}
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes float{0%,100%{transform:translateY(0) translateX(0)}50%{transform:translateY(-20px) translateX(20px)}}
+    @keyframes float2{0%,100%{transform:translateY(0) translateX(0)}50%{transform:translateY(20px) translateX(-20px)}}
+    @keyframes float3{0%,100%{transform:translateY(0) translateX(0)}50%{transform:translateY(-15px) translateX(-15px)}}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes slideDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+    .anim-float{animation:float 8s ease-in-out infinite}
+    .anim-float2{animation:float2 10s ease-in-out infinite}
+    .anim-float3{animation:float3 12s ease-in-out infinite}
+    .anim-fade{animation:fadeIn .5s ease-out}
+    .anim-slide{animation:slideDown .3s ease-out}
+
+    /* ===== LAYOUT ===== */
+    .container{max-width:1200px;margin:0 auto;padding:0 24px}
+    .grid-4{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px}
+    .grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+    .grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px}
+    .grid-members{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px}
+
+    /* ===== BACKGROUND ===== */
+    .bg-page{min-height:100vh;background:linear-gradient(135deg,#0f172a 0%,#022c22 50%,#0f172a 100%)}
+    .blob{position:fixed;border-radius:50%;filter:blur(80px);opacity:.15;pointer-events:none}
+    .blob1{width:300px;height:300px;background:#10b981;top:80px;left:40px}
+    .blob2{width:400px;height:400px;background:#0d9488;top:160px;right:80px}
+    .blob3{width:320px;height:320px;background:#22c55e;bottom:80px;left:33%}
+
+    /* ===== HEADER ===== */
+    .header{position:sticky;top:0;z-index:50;background:rgba(15,23,42,.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(16,185,129,.2);box-shadow:0 4px 24px rgba(0,0,0,.4)}
+    .header-inner{display:flex;align-items:center;justify-content:space-between;padding:20px 24px}
+    .logo-wrap{display:flex;align-items:center;gap:16px;cursor:pointer;text-decoration:none}
+    .logo-box{position:relative;width:64px;height:64px;background:linear-gradient(135deg,#10b981,#0d9488);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:32px;box-shadow:0 4px 20px rgba(16,185,129,.4);transition:transform .3s;flex-shrink:0}
+    .logo-box:hover{transform:rotate(6deg)}
+    .logo-title{font-size:28px;font-weight:900;background:linear-gradient(90deg,#6ee7b7,#5eead4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .logo-sub{font-size:12px;color:#6ee7b7;font-weight:600;letter-spacing:.05em}
+    .nav-desktop{display:flex;gap:8px}
+    .nav-btn{display:flex;align-items:center;gap:8px;padding:10px 20px;border-radius:12px;font-weight:700;font-size:14px;cursor:pointer;border:none;transition:all .3s;background:rgba(30,41,59,.6);color:#6ee7b7}
+    .nav-btn:hover{background:rgba(51,65,85,.7);color:#a7f3d0}
+    .nav-btn.active{background:linear-gradient(90deg,#10b981,#0d9488);color:#fff;box-shadow:0 4px 16px rgba(16,185,129,.4);transform:scale(1.05)}
+    .burger{display:none;background:rgba(30,41,59,.6);border:none;border-radius:12px;padding:12px;color:#6ee7b7;font-size:22px;cursor:pointer}
+    .nav-mobile{display:none;flex-direction:column;gap:8px;padding:16px 0}
+    .nav-mobile.open{display:flex}
+    .nav-mobile .nav-btn{width:100%;justify-content:flex-start;padding:12px 20px}
+
+    /* ===== MAIN ===== */
+    main{position:relative;z-index:10;padding:48px 0}
+
+    /* ===== HERO ===== */
+    .hero{position:relative;overflow:hidden;border-radius:24px;border:1px solid rgba(16,185,129,.3);box-shadow:0 8px 40px rgba(0,0,0,.5);margin-bottom:48px}
+    .hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.3}
+    .hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg,#0f172a 40%,rgba(2,44,34,.9) 70%,transparent)}
+    .hero-content{position:relative;padding:64px}
+    .hero-badge{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+    .hero-badge span{font-size:40px}
+    .hero-badge p{color:#34d399;font-weight:700;font-size:16px;text-transform:uppercase;letter-spacing:.1em}
+    .hero-h1{font-size:clamp(36px,6vw,72px);font-weight:900;color:#fff;line-height:1.1;margin-bottom:24px}
+    .hero-h1 span{background:linear-gradient(90deg,#34d399,#2dd4bf);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero-p{font-size:18px;color:#cbd5e1;line-height:1.7;margin-bottom:32px;max-width:560px}
+    .hero-btns{display:flex;flex-wrap:wrap;gap:16px}
+    .btn-primary{display:inline-flex;align-items:center;gap:8px;padding:16px 32px;background:linear-gradient(90deg,#10b981,#0d9488);color:#fff;border-radius:12px;font-weight:700;font-size:16px;text-decoration:none;border:none;cursor:pointer;box-shadow:0 4px 20px rgba(16,185,129,.4);transition:all .3s}
+    .btn-primary:hover{box-shadow:0 6px 28px rgba(16,185,129,.6);transform:scale(1.05)}
+    .btn-secondary{display:inline-flex;align-items:center;gap:8px;padding:16px 32px;background:rgba(30,41,59,.8);color:#6ee7b7;border-radius:12px;font-weight:700;font-size:16px;text-decoration:none;border:1px solid rgba(16,185,129,.3);cursor:pointer;transition:all .3s}
+    .btn-secondary:hover{background:rgba(51,65,85,.8);transform:scale(1.05)}
+
+    /* ===== CARDS ===== */
+    .card{background:rgba(15,23,42,.6);backdrop-filter:blur(12px);border:1px solid rgba(16,185,129,.2);border-radius:20px;overflow:hidden;transition:all .4s;cursor:default}
+    .card:hover{border-color:rgba(16,185,129,.5);transform:scale(1.04)}
+    .card-img{width:100%;object-fit:cover;display:block;transition:transform .5s}
+    .card:hover .card-img{transform:scale(1.1)}
+    .card-img-wrap{overflow:hidden;position:relative}
+    .card-img-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,#0f172a 0%,transparent 60%)}
+    .card-body{padding:24px}
+
+    /* ===== STAT CARDS ===== */
+    .stat-card{background:rgba(15,23,42,.6);backdrop-filter:blur(12px);border:1px solid rgba(16,185,129,.2);border-radius:20px;padding:24px;transition:all .4s;position:relative;overflow:hidden}
+    .stat-card:hover{border-color:rgba(16,185,129,.5);transform:scale(1.05)}
+    .stat-icon{font-size:48px;margin-bottom:16px;display:block}
+    .stat-val{font-size:40px;font-weight:900;margin-bottom:8px}
+    .stat-label{color:#94a3b8;font-weight:600}
+
+    /* ===== TIMELINE ===== */
+    .timeline{position:relative;padding-left:80px}
+    .timeline::before{content:'';position:absolute;left:32px;top:0;bottom:0;width:4px;background:linear-gradient(to bottom,#10b981,#0d9488,#10b981);border-radius:2px}
+    .tl-item{position:relative;margin-bottom:48px}
+    .tl-dot{position:absolute;left:-80px;top:0;width:64px;height:64px;background:linear-gradient(135deg,#10b981,#0d9488);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:13px;box-shadow:0 4px 16px rgba(16,185,129,.5);transition:transform .3s;text-align:center;line-height:1.2}
+    .tl-item:hover .tl-dot{transform:scale(1.1)}
+    .tl-card{background:rgba(15,23,42,.6);backdrop-filter:blur(12px);border:1px solid rgba(16,185,129,.2);border-radius:20px;overflow:hidden;transition:all .4s}
+    .tl-item:hover .tl-card{border-color:rgba(16,185,129,.5);transform:scale(1.02)}
+    .tl-inner{display:flex;flex-wrap:wrap}
+    .tl-img{width:100%;max-width:40%;object-fit:cover;min-height:200px;transition:transform .5s}
+    .tl-item:hover .tl-img{transform:scale(1.08)}
+    .tl-text{padding:32px;flex:1;min-width:240px}
+    .tl-text h3{font-size:28px;font-weight:700;color:#fff;margin-bottom:16px}
+    .tl-text p{color:#94a3b8;font-size:16px;line-height:1.7}
+
+    /* ===== MEMBER CARD ===== */
+    .member-card{background:rgba(15,23,42,.6);backdrop-filter:blur(12px);border:1px solid rgba(16,185,129,.2);border-radius:20px;overflow:hidden;transition:all .4s}
+    .member-card:hover{border-color:rgba(16,185,129,.5);transform:scale(1.05)}
+    .member-img-wrap{position:relative;height:256px;overflow:hidden}
+    .member-img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+    .member-card:hover .member-img{transform:scale(1.1)}
+    .member-img-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,#0f172a 0%,transparent 60%)}
+    .member-badge{position:absolute;top:16px;right:16px;z-index:1;background:rgba(16,185,129,.9);color:#fff;font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px}
+    .member-body{padding:24px}
+    .member-name{font-size:18px;font-weight:700;color:#fff;margin-bottom:4px}
+    .member-class{font-size:13px;color:#34d399;margin-bottom:8px}
+    .member-date{font-size:12px;color:#64748b}
+
+    /* ===== ACHIEVEMENT CARD ===== */
+    .ach-card{background:rgba(15,23,42,.6);backdrop-filter:blur(12px);border:1px solid rgba(16,185,129,.2);border-radius:20px;overflow:hidden;transition:all .4s}
+    .ach-card:hover{border-color:rgba(16,185,129,.5);transform:scale(1.05)}
+    .ach-img-wrap{position:relative;height:224px;overflow:hidden}
+    .ach-img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+    .ach-card:hover .ach-img{transform:scale(1.1)}
+    .ach-img-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,#0f172a 40%,rgba(15,23,42,.4) 70%,transparent)}
+    .ach-trophy{position:absolute;top:16px;right:16px;z-index:1;font-size:40px}
+    .ach-body{padding:24px}
+    .ach-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+    .ach-year{background:rgba(16,185,129,.2);color:#34d399;font-size:12px;font-weight:700;padding:4px 12px;border-radius:999px}
+    .ach-cat{color:#64748b;font-size:12px}
+    .ach-title{font-size:18px;font-weight:700;color:#fff;margin-bottom:12px}
+    .ach-desc{color:#94a3b8;font-size:13px;line-height:1.6}
+
+    /* ===== EVENT CARD ===== */
+    .evt-card{background:rgba(15,23,42,.6);backdrop-filter:blur(12px);border:1px solid rgba(16,185,129,.2);border-radius:20px;overflow:hidden;transition:all .4s;margin-bottom:24px}
+    .evt-card:hover{border-color:rgba(16,185,129,.5);transform:scale(1.02)}
+    .evt-inner{display:flex;flex-wrap:wrap}
+    .evt-img-wrap{position:relative;width:100%;max-width:40%;overflow:hidden;min-height:200px}
+    .evt-img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+    .evt-card:hover .evt-img{transform:scale(1.1)}
+    .evt-img-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(15,23,42,.7) 0%,transparent 60%)}
+    .evt-body{padding:32px;flex:1;min-width:240px}
+    .evt-title{font-size:28px;font-weight:700;color:#fff;margin-bottom:12px}
+    .evt-desc{color:#94a3b8;margin-bottom:24px;line-height:1.6}
+    .evt-info{display:flex;flex-direction:column;gap:12px}
+    .evt-row{display:flex;align-items:center;gap:12px;color:#34d399;font-weight:600}
+    .evt-row span:first-child{font-size:20px}
+
+    /* ===== VISION CARDS ===== */
+    .vis-card{background:linear-gradient(135deg,rgba(6,78,59,.4),rgba(13,148,136,.3));backdrop-filter:blur(12px);border:1px solid rgba(16,185,129,.3);border-radius:20px;padding:32px}
+    .vis-icon{font-size:48px;margin-bottom:16px;display:block}
+    .vis-title{font-size:22px;font-weight:700;color:#fff;margin-bottom:16px}
+    .vis-text{color:#cbd5e1;font-size:16px;line-height:1.7}
+
+    /* ===== PAGE TITLES ===== */
+    .page-header{text-align:center;margin-bottom:48px}
+    .page-icon{font-size:64px;display:block;margin-bottom:16px}
+    .page-title{font-size:clamp(32px,5vw,52px);font-weight:900;color:#fff;margin-bottom:8px}
+    .page-sub{font-size:18px;color:#94a3b8}
+
+    /* ===== FOOTER ===== */
+    footer{background:rgba(15,23,42,.8);backdrop-filter:blur(20px);border-top:1px solid rgba(16,185,129,.2);margin-top:80px;padding:48px 24px;text-align:center;position:relative;z-index:10}
+    .foot-logo{font-size:48px;margin-bottom:16px;display:block}
+    .foot-title{font-size:22px;font-weight:900;color:#fff;margin-bottom:4px}
+    .foot-sub{font-size:13px;color:#34d399;margin-bottom:16px}
+    .foot-tagline{color:#94a3b8;font-size:16px;margin-bottom:8px}
+    .foot-copy{color:#475569;font-size:13px}
+
+    /* ===== GRADIENT TEXT COLORS ===== */
+    .grad-green{background:linear-gradient(90deg,#34d399,#2dd4bf);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .grad-amber{background:linear-gradient(90deg,#fde68a,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .grad-blue{background:linear-gradient(90deg,#93c5fd,#67e8f9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .grad-purple{background:linear-gradient(90deg,#d8b4fe,#f9a8d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:768px){
+      .nav-desktop{display:none}
+      .burger{display:block}
+      .hero-content{padding:32px 24px}
+      .tl-img{max-width:100%}
+      .evt-img-wrap{max-width:100%;height:200px}
+    }
+  </style>
 </head>
 <body>
-  <h1>Halo! GitHub Pages Berhasil!</h1>
-  <p>Jika tulisan ini muncul, berarti GitHub Pages sudah aktif dengan benar.</p>
+<div class="bg-page">
+
+  <!-- Background blobs -->
+  <div class="blob blob1 anim-float"></div>
+  <div class="blob blob2 anim-float2"></div>
+  <div class="blob blob3 anim-float3"></div>
+
+  <!-- Header -->
+  <header class="header" id="header"></header>
+
+  <!-- Main -->
+  <main>
+    <div class="container">
+      <div id="page" class="anim-fade"></div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <span class="foot-logo">🛡️</span>
+    <div class="foot-title">Pencak Silat SMAN 13</div>
+    <div class="foot-sub">Bandar Lampung</div>
+    <div class="foot-tagline">Membentuk Karakter, Mengukir Prestasi</div>
+    <div class="foot-copy">© 2012 Ekstrakurikuler Pencak Silat. Semua Hak Dilindungi.</div>
+  </footer>
+
+</div>
+<script>
+/* ================================================================
+   KONFIGURASI — Edit bagian ini sesuai kebutuhan
+================================================================ */
+var FORM_URL  = 'https://forms.gle/GANTI_LINK_GOOGLE_FORM';
+var LOGO_SRC  = ''; // kosong = pakai emoji, isi path jika punya file: './logo.png'
+
+/* ================================================================
+   DATA
+================================================================ */
+var members = [
+  { name:'Ahmad Fauzi',    belt:'Sabuk Hitam',  kelas:'XII IPA 1', join:'2022-01-15', img:'https://images.unsplash.com/photo-1566492031773-4f4e44671857?w=400&h=400&fit=crop' },
+  { name:'Siti Nurhaliza', belt:'Sabuk Coklat', kelas:'XI IPS 2',  join:'2022-06-20', img:'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop' },
+  { name:'Budi Santoso',   belt:'Sabuk Hijau',  kelas:'X MIPA 3',  join:'2023-02-10', img:'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop' },
+  { name:'Dewi Lestari',   belt:'Sabuk Merah',  kelas:'XI IPA 1',  join:'2023-08-05', img:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop' },
+  { name:'Dewi Lestari',   belt:'Sabuk Merah',  kelas:'XI IPA 1',  join:'2023-08-05', img:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop' },
+  { name:'Dewi Lestari',   belt:'Sabuk Merah',  kelas:'XI IPA 1',  join:'2023-08-05', img:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop' },
+  { name:'Dewi Lestari',   belt:'Sabuk Merah',  kelas:'XI IPA 1',  join:'2023-08-05', img:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop' },
+  { name:'Dewi Lestari',   belt:'Sabuk Merah',  kelas:'XI IPA 1',  join:'2023-08-05', img:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop' },
+  { name:'Dewi Lestari',   belt:'Sabuk Merah',  kelas:'XI IPA 1',  join:'2023-08-05', img:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop' },
+  { name:'Dewi Lestari',   belt:'Sabuk Merah',  kelas:'XI IPA 1',  join:'2023-08-05', img:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop' },
+  { name:'Dewi Lestari',   belt:'Sabuk Merah',  kelas:'XI IPA 1',  join:'2023-08-05', img:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop' },
+];
+
+var achievements = [
+  { title:'Juara 1 Porprov Lampung',      year:'2024', cat:'Tanding Putra',     desc:'Meraih medali emas pada kategori tanding putra kelas C',              img:'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=800&h=600&fit=crop' },
+  { title:'Juara 2 Kejurnas Pencak Silat',year:'2023', cat:'Seni Tunggal Putri',desc:'Perak untuk penampilan seni tunggal yang memukau',                    img:'https://images.unsplash.com/photo-1555597673-b21d5c935865?w=800&h=600&fit=crop' },
+  { title:'Juara 1 O2SN Kota',            year:'2024', cat:'Tanding Putri',     desc:'Dominasi penuh di olimpiade olahraga siswa nasional tingkat kota',    img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop' },
+];
+
+var events = [
+  { name:'Latihan Rutin Mingguan',  date:'2026-02-17', time:'15:00', loc:'Lapangan SMAN 13',    desc:'Latihan teknik dasar dan sparring',          img:'https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800&h=600&fit=crop' },
+  { name:'Ujian Kenaikan Sabuk',    date:'2026-03-20', time:'08:00', loc:'Aula Sekolah',         desc:'Ujian berkala untuk kenaikan tingkat sabuk', img:'https://images.unsplash.com/photo-1555597408-26bc8e548a46?w=800&h=600&fit=crop' },
+  { name:'Workshop Teknik Lanjutan',date:'2026-02-25', time:'13:00', loc:'Dojo Pencak Silat',    desc:'Pelatihan intensif dengan pelatih nasional', img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop' },
+];
+
+var timeline = [
+  { year:'2015', title:'Awal Perjalanan',  desc:'Didirikan oleh 12 siswa yang memiliki passion terhadap seni bela diri tradisional Indonesia. Latihan dimulai dengan fasilitas seadanya namun semangat membara.',                  img:'https://images.unsplash.com/photo-1555597408-26bc8e548a46?w=800&h=500&fit=crop' },
+  { year:'2017', title:'Berkembang Pesat', desc:'Bergabungnya pelatih profesional berlisensi dan penambahan anggota hingga 30 orang. Mulai ikut kompetisi tingkat kota.',                                                           img:'https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800&h=500&fit=crop' },
+  { year:'2020', title:'Prestasi Pertama', desc:'Meraih medali pertama di kompetisi O2SN tingkat kota. Momentum kebangkitan dan pembuktian diri.',                                                                                   img:'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=800&h=500&fit=crop' },
+  { year:'2024', title:'Era Keemasan',     desc:'Juara 1 Porprov Lampung dan berbagai prestasi gemilang lainnya. Menjadi salah satu ekstrakurikuler terbaik di Lampung dengan 50+ anggota aktif.',                                 img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=500&fit=crop' },
+];
+
+/* ================================================================
+   APP
+================================================================ */
+var currentPage = 'beranda';
+var menuOpen    = false;
+
+var navItems = [
+  { id:'beranda',  label:'Beranda',  icon:'✨' },
+  { id:'sejarah',  label:'Sejarah',  icon:'📖' },
+  { id:'anggota',  label:'Anggota',  icon:'👥' },
+  { id:'prestasi', label:'Prestasi', icon:'🏆' },
+  { id:'kegiatan', label:'Kegiatan', icon:'📅' },
+];
+
+function logoHTML(){
+  if(LOGO_SRC) return '<img src="'+LOGO_SRC+'" alt="Logo" style="width:100%;height:100%;object-fit:contain;"/>';
+  return '🛡️';
+}
+
+function renderHeader(){
+  var btns = navItems.map(function(n){
+    return '<button class="nav-btn'+(currentPage===n.id?' active':'')+'" data-go="'+n.id+'">'+n.icon+' '+n.label+'</button>';
+  }).join('');
+  var mobileBtns = navItems.map(function(n){
+    return '<button class="nav-btn'+(currentPage===n.id?' active':'')+'" data-go="'+n.id+'">'+n.icon+' '+n.label+'</button>';
+  }).join('');
+  document.getElementById('header').innerHTML =
+    '<div class="container">'+
+    '<div class="header-inner">'+
+      '<a class="logo-wrap" data-go="beranda">'+
+        '<div class="logo-box">'+logoHTML()+'</div>'+
+        '<div><div class="logo-title">PENCAK SILAT</div><div class="logo-sub">SMAN 13 Bandar Lampung</div></div>'+
+      '</a>'+
+      '<nav class="nav-desktop">'+btns+'</nav>'+
+      '<button class="burger" id="burger">'+(menuOpen?'✕':'☰')+'</button>'+
+    '</div>'+
+    '<nav class="nav-mobile'+(menuOpen?' open':'')+'">'+mobileBtns+'</nav>'+
+    '</div>';
+  bindEvents();
+}
+
+function renderPage(){
+  var el = document.getElementById('page');
+  el.className = 'anim-fade';
+  var html = '';
+  if(currentPage==='beranda')  html = pageBeranda();
+  if(currentPage==='sejarah')  html = pageSejarah();
+  if(currentPage==='anggota')  html = pageAnggota();
+  if(currentPage==='prestasi') html = pagePrestasi();
+  if(currentPage==='kegiatan') html = pageKegiatan();
+  el.innerHTML = html;
+  // re-trigger animation
+  void el.offsetWidth;
+  el.className = 'anim-fade';
+  bindEvents();
+}
+
+function go(page){
+  currentPage = page;
+  menuOpen    = false;
+  renderHeader();
+  renderPage();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggleMenu(){
+  menuOpen = !menuOpen;
+  renderHeader();
+}
+
+function bindEvents(){
+  document.querySelectorAll('[data-go]').forEach(function(el){
+    el.onclick = function(){ go(el.getAttribute('data-go')); };
+  });
+  var b = document.getElementById('burger');
+  if(b) b.onclick = toggleMenu;
+}
+
+/* ================================================================
+   PAGES
+================================================================ */
+function pageBeranda(){
+  var stats = [
+    {icon:'👥',val:'50+',label:'Anggota Aktif',  cls:'grad-green'},
+    {icon:'🏆',val:'15+',label:'Prestasi Diraih', cls:'grad-amber'},
+    {icon:'🎯',val:'9',  label:'Tahun Berdiri',   cls:'grad-blue'},
+    {icon:'⭐',val:'5',  label:'Pelatih Pro',      cls:'grad-purple'},
+  ];
+  var features = [
+    {icon:'🛡️',title:'Teknik Profesional',desc:'Belajar dari pelatih bersertifikat nasional dengan pengalaman kompetisi tingkat tinggi',  img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop'},
+    {icon:'⭐',title:'Prestasi Gemilang', desc:'Raih medali emas dan perak di berbagai kompetisi regional hingga nasional',                img:'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=600&h=400&fit=crop'},
+    {icon:'👥',title:'Komunitas Solid',   desc:'Bergabung dengan keluarga besar pesilat SMAN 13 yang suportif dan kompetitif',             img:'https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600&h=400&fit=crop'},
+  ];
+  return(
+    '<div class="hero">'+
+      '<img class="hero-img" src="https://images.unsplash.com/photo-1555597408-26bc8e548a46?w=1600&h=800&fit=crop" alt="Hero"/>'+
+      '<div class="hero-overlay"></div>'+
+      '<div class="hero-content">'+
+        '<div class="hero-badge"><span>⚔️</span><p>Ekstrakurikuler Unggulan</p></div>'+
+        '<h1 class="hero-h1">Membentuk<br/><span>Karakter Juara</span></h1>'+
+        '<p class="hero-p">Bergabunglah dengan kami dalam perjalanan mengasah kemampuan bela diri tradisional Indonesia, membentuk disiplin, dan meraih prestasi gemilang.</p>'+
+        '<div class="hero-btns">'+
+          '<a href="'+FORM_URL+'" target="_blank" rel="noopener noreferrer" class="btn-primary">👥 Daftar Sekarang</a>'+
+          '<button class="btn-secondary" data-go="prestasi">🏆 Lihat Prestasi</button>'+
+        '</div>'+
+      '</div>'+
+    '</div>'+
+    '<div class="grid-4" style="margin-bottom:48px">'+
+      stats.map(function(s){
+        return '<div class="stat-card"><span class="stat-icon">'+s.icon+'</span><div class="stat-val '+s.cls+'">'+s.val+'</div><div class="stat-label">'+s.label+'</div></div>';
+      }).join('')+
+    '</div>'+
+    '<div class="grid-3">'+
+      features.map(function(f){
+        return '<div class="card"><div class="card-img-wrap" style="height:192px"><img class="card-img" src="'+f.img+'" alt="'+f.title+'" style="height:192px"/></div><div class="card-body"><div style="font-size:40px;margin-bottom:16px">'+f.icon+'</div><h3 style="font-size:22px;font-weight:700;color:#fff;margin-bottom:12px">'+f.title+'</h3><p style="color:#94a3b8">'+f.desc+'</p></div></div>';
+      }).join('')+
+    '</div>'
+  );
+}
+
+function pageSejarah(){
+  return(
+    '<div class="page-header"><span class="page-icon">📖</span><h2 class="page-title">Sejarah Kami</h2><p class="page-sub">Perjalanan panjang ekstrakurikuler Pencak Silat SMAN 13 Bandar Lampung</p></div>'+
+    '<div class="timeline" style="margin-bottom:48px">'+
+      timeline.map(function(t){
+        return '<div class="tl-item"><div class="tl-dot">'+t.year+'</div><div class="tl-card"><div class="tl-inner"><img class="tl-img" src="'+t.img+'" alt="'+t.title+'"/><div class="tl-text"><h3>'+t.title+'</h3><p>'+t.desc+'</p></div></div></div></div>';
+      }).join('')+
+    '</div>'+
+    '<div class="grid-2">'+
+      '<div class="vis-card"><span class="vis-icon">🎯</span><div class="vis-title">Visi Kami</div><div class="vis-text">Menjadi ekstrakurikuler Pencak Silat terbaik yang membentuk generasi berprestasi, berkarakter, dan mencintai budaya bangsa.</div></div>'+
+      '<div class="vis-card"><span class="vis-icon">✨</span><div class="vis-title">Misi Kami</div><div class="vis-text">Melatih siswa dengan teknik profesional, membentuk karakter disiplin, dan meraih prestasi gemilang di tingkat nasional.</div></div>'+
+    '</div>'
+  );
+}
+
+function pageAnggota(){
+  return(
+    '<div class="page-header"><span class="page-icon">👥</span><h2 class="page-title">Anggota Kami</h2><p class="page-sub">Pesilat berbakat SMAN 13 Bandar Lampung</p></div>'+
+    '<div class="grid-members">'+
+      members.map(function(m){
+        return '<div class="member-card"><div class="member-img-wrap"><img class="member-img" src="'+m.img+'" alt="'+m.name+'"/><div class="member-badge">'+m.belt+'</div></div><div class="member-body"><div class="member-name">'+m.name+'</div><div class="member-class">'+m.kelas+'</div><div class="member-date">Bergabung: '+m.join+'</div></div></div>';
+      }).join('')+
+    '</div>'
+  );
+}
+
+function pagePrestasi(){
+  return(
+    '<div class="page-header"><span class="page-icon">🏆</span><h2 class="page-title">Prestasi Kami</h2><p class="page-sub">Pencapaian membanggakan yang telah diraih</p></div>'+
+    '<div class="grid-3">'+
+      achievements.map(function(a){
+        return '<div class="ach-card"><div class="ach-img-wrap"><img class="ach-img" src="'+a.img+'" alt="'+a.title+'"/><div class="ach-trophy">🏆</div></div><div class="ach-body"><div class="ach-meta"><span class="ach-year">'+a.year+'</span><span class="ach-cat">'+a.cat+'</span></div><div class="ach-title">'+a.title+'</div><div class="ach-desc">'+a.desc+'</div></div></div>';
+      }).join('')+
+    '</div>'
+  );
+}
+
+function pageKegiatan(){
+  return(
+    '<div class="page-header"><span class="page-icon">📅</span><h2 class="page-title">Jadwal & Kegiatan</h2><p class="page-sub">Agenda dan kegiatan ekstrakurikuler</p></div>'+
+    events.map(function(e){
+      return '<div class="evt-card"><div class="evt-inner"><div class="evt-img-wrap"><img class="evt-img" src="'+e.img+'" alt="'+e.name+'"/></div><div class="evt-body"><div class="evt-title">'+e.name+'</div><div class="evt-desc">'+e.desc+'</div><div class="evt-info"><div class="evt-row"><span>📅</span><span>'+e.date+'</span></div><div class="evt-row"><span>🕐</span><span>Pukul '+e.time+' WIB</span></div><div class="evt-row"><span>📍</span><span>'+e.loc+'</span></div></div></div></div></div>';
+    }).join('')
+  );
+}
+
+/* ================================================================
+   INIT
+================================================================ */
+renderHeader();
+renderPage();
+</script>
 </body>
 </html>
