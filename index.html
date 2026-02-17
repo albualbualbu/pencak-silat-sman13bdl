@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Website Ekstrakurikuler Pencak Silat SMAN 13 Bandar Lampung">
+  <meta name="keywords" content="pencak silat, SMAN 13, Bandar Lampung, ekstrakurikuler, bela diri">
+  <title>Pencak Silat SMAN 13 Bandar Lampung</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes float {
+      0%, 100% { transform: translateY(0) translateX(0); }
+      50% { transform: translateY(-20px) translateX(20px); }
+    }
+    @keyframes float-delayed {
+      0%, 100% { transform: translateY(0) translateX(0); }
+      50% { transform: translateY(20px) translateX(-20px); }
+    }
+    @keyframes float-slow {
+      0%, 100% { transform: translateY(0) translateX(0); }
+      50% { transform: translateY(-15px) translateX(-15px); }
+    }
+    @keyframes slide-down {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-float { animation: float 8s ease-in-out infinite; }
+    .animate-float-delayed { animation: float-delayed 10s ease-in-out infinite; }
+    .animate-float-slow { animation: float-slow 12s ease-in-out infinite; }
+    .animate-slide-down { animation: slide-down 0.3s ease-out; }
+    .animate-fade-in { animation: fade-in 0.5s ease-out; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; overflow-x: hidden; }
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="app.js"></script>
+</body>
+</html>
