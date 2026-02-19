@@ -261,11 +261,11 @@ var currentPage = 'beranda';
 var menuOpen    = false;
 
 var navItems = [
-  { id:'beranda',  label:'Beranda',  icon:'✨' },
-  { id:'sejarah',  label:'Sejarah',  icon:'📖' },
-  { id:'anggota',  label:'Anggota',  icon:'👥' },
-  { id:'prestasi', label:'Prestasi', icon:'🏆' },
-  { id:'kegiatan', label:'Kegiatan', icon:'📅' },
+  { id:'beranda',  label:'Beranda', },
+  { id:'sejarah',  label:'Sejarah', },
+  { id:'anggota',  label:'Anggota', },
+  { id:'prestasi', label:'Prestasi', },
+  { id:'kegiatan', label:'Kegiatan', },
 ];
 
 function logoHTML(){
@@ -343,9 +343,9 @@ function pageBeranda(){
     {icon:'⭐',val:'5',  label:'Pelatih Pro',      cls:'grad-purple'},
   ];
   var features = [
-    {icon:'🛡️',title:'Teknik Profesional',desc:'Belajar dari pelatih bersertifikat nasional dengan pengalaman kompetisi tingkat tinggi',  img:'https://albualbualbu.github.io/pencak-silat-sman13bdl/TeknikProfesional.jpg'},
-    {icon:'⭐',title:'Prestasi Gemilang', desc:'Raih medali emas dan perak di berbagai kompetisi regional hingga nasional',                img:'https://albualbualbu.github.io/pencak-silat-sman13bdl/PrestasiGemilang.jpg'},
-    {icon:'👥',title:'Komunitas Solid',   desc:'Bergabung dengan keluarga besar pesilat SMAN 13 yang suportif dan kompetitif',             img:'https://albualbualbu.github.io/pencak-silat-sman13bdl/KomunitasSolid.jpg'},
+    {title:'Teknik Profesional',desc:'Belajar dari pelatih bersertifikat nasional dengan pengalaman kompetisi tingkat tinggi',  img:'https://albualbualbu.github.io/pencak-silat-sman13bdl/TeknikProfesional.jpg'},
+    {title:'Prestasi Gemilang', desc:'Raih medali emas dan perak di berbagai kompetisi regional hingga nasional',                img:'https://albualbualbu.github.io/pencak-silat-sman13bdl/PrestasiGemilang.jpg'},
+    {title:'Komunitas Solid',   desc:'Bergabung dengan keluarga besar pesilat SMAN 13 yang suportif dan kompetitif',             img:'https://albualbualbu.github.io/pencak-silat-sman13bdl/KomunitasSolid.jpg'},
   ];
   return(
     '<div class="hero">'+
@@ -428,6 +428,7 @@ renderPage();
 </script>
 </body>
 </html>
+
 
 
 
